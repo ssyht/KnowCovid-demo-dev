@@ -2,7 +2,11 @@ From python:3.8
 MAINTAINER Songjie Wang "wangso@missouri.edu"
 
 ARG DEBIAN_FRONTEND=noninteractive
-RUN apt-get -y update && apt-get -y install net-tools nano wget curl 
+RUN apt-get -y update || true \
+ && echo 'Acquire::AllowReleaseInfoChange::Suite "true";' > /etc/apt/apt.conf.d/99releaseinfochange \
+ && apt-get -y update \
+ && apt-get -y install lsb-release net-tools nano
+
 WORKDIR /root
 RUN pip3 install pandas flask requests py_eureka_client flask_restful flask_cors scipy smart_open cython scikit-learn
  
